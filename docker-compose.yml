@@ -3,10 +3,10 @@ services:
   db:
     image: mysql
     container_name: mysql_db
+    restart: unless-stopped
     ports:
-      - '3306:3306'
+      - $DB_LOCAL_PORT:$DB_DOCKER_PORT
+    env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: test_db
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_DATABASE
