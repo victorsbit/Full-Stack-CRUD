@@ -1,4 +1,3 @@
-#Build stage
 FROM node:alpine
 
 WORKDIR /usr/app
