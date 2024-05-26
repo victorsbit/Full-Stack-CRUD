@@ -1,12 +1,20 @@
 import { Request, Response } from 'express';
-import { connection } from '../config/db';
+import userService from '../services/userService';
 
-const getAll = async (req: Request, res: Response) => {
+const getAll = async (req: Request, res: Response): Promise<Response | void> => {
   try {
-    const [rows, fields] = await connection.query('SELECT CURRENT_TIMESTAMP()');
+    const result = await userService.getAll();
 
-    res.status(200).send(rows);
+    return res.status(200).send(result);
   } catch (error) {}
 };
 
-export default { getAll };
+const getUser = async (req: Request, res: Response): Promise<Response | void> => {
+  try {
+    const result = await userService.getUser(req.body);
+
+    return res.status(200).send(result);
+  } catch (error) {}
+};
+
+export default { getAll, getUser };
