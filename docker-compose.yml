@@ -10,3 +10,30 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
       MYSQL_DATABASE: $DB_DATABASE
+    networks:
+      - crud
+
+  api:
+    depends_on:
+      - db
+    container_name: node_api
+    build: ./fullstack-app.api
+    restart: unless-stopped
+    command: npm start
+    env_file: ./.env
+    environment:
+      - DB_HOST=$DB_HOST
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_ROOT_PASSWORD
+      - DB_NAME=$DB_DATABASE
+      - DB_PORT=$DB_DOCKER_PORT
+    ports:
+      - 3001:3001
+    networks:
+      - crud
+    volumes:
+      - ./fullstack-app.api:/usr/app
+
+networks:
+  crud:
+    driver: bridge
