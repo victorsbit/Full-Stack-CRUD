@@ -5,7 +5,7 @@
   "main": "dist/app.ts",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/app.js",
+    "start": "nodemon -L src/app.ts",
     "dev": "nodemon src/app.ts"
   },
   "author": "",
