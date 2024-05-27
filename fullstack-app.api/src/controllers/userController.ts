@@ -23,9 +23,7 @@ const createUser = async (req: Request, res: Response): Promise<Response | void>
     const result = await authService.signUpRequest(req.body);
 
     if (result) return res.status(result.responseCode).send({ sucess: result.success, message: result.message });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 const updateUser = async (req: Request, res: Response): Promise<Response | void> => {
@@ -33,9 +31,7 @@ const updateUser = async (req: Request, res: Response): Promise<Response | void>
     const result = await userService.updateUser(req.body, req.params.id);
 
     if (result) return res.status(result.responseCode).send({ sucess: result.success, message: result.message });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 const deleteUser = async (req: Request, res: Response): Promise<Response | void> => {
