@@ -23,7 +23,7 @@ const loginRequest = async (requestBody: AuthLoginRequest): Promise<BaseResponse
 
 const signUpRequest = async (requestBody: signUpRequest): Promise<BaseResponse<number> | void> => {
   try {
-    const userResult = await userModel.getUser(requestBody.email);
+    const userResult = await userModel.getUserByEmail(requestBody.email);
     if (userResult) return { responseCode: 400, success: false, message: 'Usuário já cadastrado no sistema' };
 
     const result = await authModel.signUpRequest(requestBody);

@@ -7,3 +7,10 @@ export interface User extends RowDataPacket {
   Email: string;
   Password: string;
 }
+
+export interface UserDTO {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
