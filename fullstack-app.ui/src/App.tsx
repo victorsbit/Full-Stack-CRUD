@@ -1,5 +1,13 @@
+import { Route, Routes } from 'react-router-dom';
+
+import IndexPage from '@/pages/index';
+
 function App() {
-  return <h1 className='text-2xl font-bold'>Hello, world!</h1>;
+  return (
+    <Routes>
+      <Route element={<IndexPage />} path='/' />
+    </Routes>
+  );
 }
 
 export default App;
