@@ -25,7 +25,7 @@ api.interceptors.response.use(
     return response;
   },
   async function (error) {
-    if (error.response.status === 401) {
+    if (error.response.status === 401 && Cookies.get('token')) {
       toast.warning(`${error.response.data.message}. Por favor, faça o login novamente`);
       history.push('/');
     }
