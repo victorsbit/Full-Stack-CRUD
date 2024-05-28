@@ -25,6 +25,13 @@ export default function IndexPage() {
 
   const handleSignUp = async () => {
     const response = await signUp({ firstName, lastName, email, password });
+
+    if (response) {
+      if (!response.success) return toast.error(response.message);
+
+      onOpenChange();
+      return toast.success('Cadastro efetuado com sucesso. Por favor, realize o login no sistema');
+    }
   };
 
   const handleLogin = async () => {

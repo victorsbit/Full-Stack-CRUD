@@ -13,10 +13,12 @@ export const signIn = async (user: SignInRequest): Promise<BaseResponse<string> 
   }
 };
 
-export const signUp = async (newUser: SignUpRequest): Promise<BaseResponse<unknown> | void> => {
+export const signUp = async (newUser: SignUpRequest): Promise<BaseResponse<undefined> | void> => {
   try {
-    const response = await api.post<BaseResponse<unknown>>('/auth/signup', newUser);
+    const response = await api.post<BaseResponse<undefined>>('/auth/signup', newUser);
 
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof AxiosError) return error.response?.data;
+  }
 };

@@ -7,7 +7,7 @@ export function Provider({ children }: { children: React.ReactNode }) {
 
   return (
     <NextUIProvider className='h-full' navigate={navigate}>
-      <Toaster richColors />
+      <Toaster richColors closeButton />
       {children}
     </NextUIProvider>
   );
