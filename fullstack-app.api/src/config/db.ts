@@ -1,10 +1,5 @@
 import { createPool } from 'mysql2/promise';
-import fs from 'fs';
-import path from 'path';
-
-const seedQuery = fs.readFileSync(path.resolve(__dirname, './seed.sql'), {
-  encoding: 'utf-8',
-});
+import { seedString } from './seed';
 
 export const connection = createPool({
   host: process.env.DB_HOST,
@@ -16,4 +11,4 @@ export const connection = createPool({
 });
 
 console.log('Running SQL seed...');
-connection.query(seedQuery);
+connection.query(seedString);
