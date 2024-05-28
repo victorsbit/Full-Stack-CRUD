@@ -1,5 +1,4 @@
 import { createPool } from 'mysql2/promise';
-import { seedString } from './seed';
 
 export const connection = createPool({
   host: process.env.DB_HOST,
@@ -9,6 +8,3 @@ export const connection = createPool({
   database: process.env.DB_DATABASE,
   multipleStatements: true,
 });
-
-console.log('Running SQL seed...');
-connection.query(seedString);
