@@ -1,3 +1,6 @@
+import Joi from 'joi';
+import { UserDTO } from '../interfaces/user';
+
 export function toCamel(o: any): any {
   let newO: any;
   let origKey: string;
