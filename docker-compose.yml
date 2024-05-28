@@ -17,7 +17,8 @@ services:
     depends_on:
       - db
     container_name: node_api
-    build: ./fullstack-app.api
+    build:
+      context: ./fullstack-app.api
     restart: unless-stopped
     command: npm start
     env_file: ./.env
@@ -32,8 +33,6 @@ services:
       - 3001:3001
     networks:
       - crud
-    volumes:
-      - ./fullstack-app.api:/usr/app
 
 networks:
   crud:
