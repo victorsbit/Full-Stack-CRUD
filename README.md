@@ -1,10 +1,8 @@
-# Welcome to Store Manager project!
+# Welcome to the project!
 
 A RESTful API that uses MSC architecture to manage a User management system.
 
-# Technologies, tools and architectures used
-
-This project used the following technologies and tools:
+# Technologies used
 
 - **Node.js, Express, Nodemon, Joi**
 - **MySQL**
