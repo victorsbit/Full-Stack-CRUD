@@ -6,6 +6,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure
 import { signIn, signUp } from '@/services/modules/authService';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 export default function IndexPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -18,26 +19,30 @@ export default function IndexPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const router = useNavigate();
+
   const handleSignUp = async () => {
     const response = await signUp({ firstName, lastName, email, password });
-
-    console.log(response);
   };
 
   const handleLogin = async () => {
     const response = await signIn({ email: loginEmail, password: loginPassword });
 
-    if (response && response.success) return toast.success('Login realizado com sucesso');
-    if (response) return toast.error(response.message);
+    if (response && response.success) {
+      toast.success('Login realizado com sucesso');
+      return router('/home');
+    }
+
+    if (response) return toast.error('Email ou senha incorreto(s)');
   };
 
   return (
-    <main className='w-full flex h-full'>
-      <div className='w-3/5 flex flex-col h-full bg-[#F5F5F5]'>
+    <main className='w-full flex flex-col md:flex-row h-full'>
+      <div className='w-full md:w-3/5 flex flex-col h-full bg-[#F5F5F5]'>
         <div className='h-1/3 p-10 w-full flex justify-start'>
           <Image src={logo} width={300} height={0} />
         </div>
-        <div className='h-1/3 p-10 w-full flex flex-col'>
+        <div className='h-2/3 md:h-1/3 p-10 w-full flex flex-col'>
           <h1 className='text-3xl font-semibold text-gray-600 mb-10 px-5'>Login com a sua conta</h1>
           <div className='flex flex-col gap-2'>
             <Input
@@ -58,7 +63,7 @@ export default function IndexPage() {
               onValueChange={setLoginPassword}
             />
             <Button
-              className='p-6 bg-[#33bcff] w-[150px] text-white text-lg font-semibold self-end mt-5'
+              className='p-6 bg-[#33bcff] w-[150px] text-white text-lg font-semibold self-center mt-5'
               size='md'
               radius='full'
               onPress={handleLogin}
@@ -70,7 +75,7 @@ export default function IndexPage() {
         <div className='h-1/3'></div>
       </div>
 
-      <div className='w-2/5 h-full bg-[#33bcff] flex items-center shadow-2xl shadow-[#33bcff]'>
+      <div className='w-full md:w-2/5 h-full bg-[#33bcff] flex items-center shadow-2xl shadow-[#33bcff]'>
         <div className='flex flex-col gap-5 p-10 items-center w-full'>
           <h1 className='text-3xl font-semibold text-white'>Primeira vez aqui?</h1>
           <Button className='p-8 bg-white w-[200px]' size='lg' radius='full' onPress={onOpen}>
