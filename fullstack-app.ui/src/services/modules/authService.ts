@@ -3,9 +3,9 @@ import api from '../api';
 import { BaseResponse } from '../../interfaces/common';
 import { Axios, AxiosError } from 'axios';
 
-export const signIn = async (user: SignInRequest): Promise<BaseResponse<undefined> | void> => {
+export const signIn = async (user: SignInRequest): Promise<BaseResponse<string> | void> => {
   try {
-    const response = await api.post<BaseResponse<undefined>>('/auth/login', user);
+    const response = await api.post<BaseResponse<string>>('/auth/login', user);
 
     return response.data;
   } catch (error: unknown) {

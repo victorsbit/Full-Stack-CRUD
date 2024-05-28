@@ -5,7 +5,11 @@ const loginRequest = async (req: Request, res: Response): Promise<Response | voi
   try {
     const result = await authService.loginRequest(req.body);
 
-    if (result) return res.status(result.responseCode).send({ success: result.success, message: result.message });
+    if (result) {
+      return res
+        .status(result.responseCode)
+        .send({ success: result.success, message: result.message, data: result.data });
+    }
   } catch (error) {
     console.log(error);
   }

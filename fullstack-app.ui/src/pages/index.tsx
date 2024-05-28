@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
+
 export default function IndexPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -29,11 +31,12 @@ export default function IndexPage() {
     const response = await signIn({ email: loginEmail, password: loginPassword });
 
     if (response && response.success) {
+      Cookies.set('token', response.data);
       toast.success('Login realizado com sucesso');
       return router('/home');
     }
 
-    if (response) return toast.error('Email ou senha incorreto(s)');
+    if (response) return toast.error(response.message);
   };
 
   return (

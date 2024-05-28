@@ -2,20 +2,26 @@ import { AuthLoginRequest, signUpRequest } from '../interfaces/auth';
 import { BaseResponse } from '../interfaces/common';
 import authModel from '../models/authModel';
 import userModel from '../models/userModel';
+import jsonwebtoken from 'jsonwebtoken';
 
-const loginRequest = async (requestBody: AuthLoginRequest): Promise<BaseResponse<undefined> | void> => {
+const loginRequest = async (requestBody: AuthLoginRequest): Promise<BaseResponse<string> | void> => {
   try {
     const result = await authModel.loginRequest(requestBody.email);
+    if (result) {
+      if (!result.length) {
+        return { responseCode: 404, success: false, message: 'Usuário não encontrado' };
+      }
 
-    if (Array.isArray(result) && !result.length) {
-      return { responseCode: 404, success: false, message: 'Usuário não encontrado' };
+      if (result[0].Password !== requestBody.password) {
+        return { responseCode: 401, success: false, message: 'Senha incorreta' };
+      }
+
+      const token = jsonwebtoken.sign({ user: JSON.stringify(result[0]) }, process.env.JWT_PRIVATE_KEY as string, {
+        expiresIn: '10m',
+      });
+
+      return { responseCode: 200, success: true, message: 'Usuário autenticado', data: token };
     }
-
-    if (Array.isArray(result) && result[0].Password !== requestBody.password) {
-      return { responseCode: 401, success: false, message: 'Senha incorreta' };
-    }
-
-    return { responseCode: 200, success: true, message: 'Usuário autenticado' };
   } catch (error) {
     console.log(error);
   }
