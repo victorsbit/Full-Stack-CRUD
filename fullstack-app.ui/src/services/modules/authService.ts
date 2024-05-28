@@ -1,7 +1,7 @@
 import { SignInRequest, SignUpRequest } from '@/interfaces/auth';
 import api from '../api';
 import { BaseResponse } from '../../interfaces/common';
-import { Axios, AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 export const signIn = async (user: SignInRequest): Promise<BaseResponse<string> | void> => {
   try {

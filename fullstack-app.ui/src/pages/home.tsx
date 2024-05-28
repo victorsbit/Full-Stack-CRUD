@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { LogOut } from 'lucide-react';
+
 const columns = [
   {
     key: 'iD',
@@ -60,12 +62,23 @@ export default function HomePage() {
     }
   }, []);
 
+  const handleLogout = () => {
+    Cookies.remove('token');
+    toast.success('Logout realizado com sucesso.');
+    return router('/');
+  };
+
   return (
     <main className='flex flex-col w-full h-full gap-20'>
-      <nav className='w-full p-8 bg-[#F5F5F5] shadow-md shadow-[#C0C0C0]'>
+      <nav className='w-full flex items-center justify-between p-8 bg-[#F5F5F5] shadow-md shadow-[#C0C0C0]'>
         <Image src={logo} width={300} height={0} />
+        <LogOut
+          size={35}
+          className='bg-[#F5F5F5] hover:bg-[#C0C0C0] cursor-pointer rounded-lg p-1 transition-all'
+          onClick={handleLogout}
+        />
       </nav>
-      <h2 className='text-xl md:text-2xl lg:text-3xl px-10'>Listagem de usuários</h2>
+      <h2 className='text-xl md:text-2xl lg:text-3xl px-10'>Usuários cadastrados</h2>
       <div className='w-full px-10'>
         <Table aria-label='Example table with dynamic content'>
           <TableHeader columns={columns}>
