@@ -28,6 +28,8 @@ docker-compose up
 
 It is necessary to access the **http://localhost:3001** (API's address) to seed the database.
 
+### The Frontend is available at **http://localhost:3000**
+
 ## Documentation
 
 The documentation can be found [at](https://documenter.getpostman.com/view/31565040/2sA3QtdB3m).
