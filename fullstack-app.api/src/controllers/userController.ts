@@ -22,7 +22,7 @@ const createUser = async (req: Request, res: Response): Promise<Response | void>
   try {
     const result = await authService.signUpRequest(req.body);
 
-    if (result) return res.status(result.responseCode).send({ sucess: result.success, message: result.message });
+    if (result) return res.status(result.responseCode).send({ success: result.success, message: result.message });
   } catch (error) {}
 };
 
@@ -30,7 +30,7 @@ const updateUser = async (req: Request, res: Response): Promise<Response | void>
   try {
     const result = await userService.updateUser(req.body, req.params.id);
 
-    if (result) return res.status(result.responseCode).send({ sucess: result.success, message: result.message });
+    if (result) return res.status(result.responseCode).send({ success: result.success, message: result.message });
   } catch (error) {}
 };
 

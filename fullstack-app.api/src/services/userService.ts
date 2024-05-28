@@ -1,6 +1,7 @@
 import { BaseResponse } from '../interfaces/common';
 import { User, UserDTO } from '../interfaces/user';
 import userModel from '../models/userModel';
+import { toCamel } from '../utils';
 
 const checkExistingUser = async (id: string | number): Promise<User | undefined> => {
   try {
@@ -12,23 +13,25 @@ const checkExistingUser = async (id: string | number): Promise<User | undefined>
   }
 };
 
-const getAllUsers = async (): Promise<BaseResponse<User[] | undefined> | void> => {
+const getAllUsers = async (): Promise<BaseResponse<UserDTO[] | undefined> | void> => {
   try {
     const result = await userModel.getAllUsers();
 
-    if (Array.isArray(result)) return { responseCode: 200, success: true, data: result };
+    if (Array.isArray(result)) {
+      return { responseCode: 200, success: true, data: toCamel(result) };
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-const getUser = async (id: string | number): Promise<BaseResponse<User | undefined> | void> => {
+const getUser = async (id: string | number): Promise<BaseResponse<UserDTO | undefined> | void> => {
   try {
     const result = await checkExistingUser(id);
 
     if (!result) return { responseCode: 404, success: false, message: 'Usuário não encontrado' };
 
-    return { responseCode: 200, success: true, data: result };
+    return { responseCode: 200, success: true, data: toCamel(result) };
   } catch (error) {
     console.log(error);
   }

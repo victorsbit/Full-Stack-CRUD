@@ -3,11 +3,15 @@ import { Image } from '@nextui-org/image';
 import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/modal';
-import { signUp } from '@/services/modules/auth';
+import { signIn, signUp } from '@/services/modules/authService';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function IndexPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const [loginEmail, setLoginEmail] = useState<string>('');
+  const [loginPassword, setLoginPassword] = useState<string>('');
 
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
@@ -20,6 +24,13 @@ export default function IndexPage() {
     console.log(response);
   };
 
+  const handleLogin = async () => {
+    const response = await signIn({ email: loginEmail, password: loginPassword });
+
+    if (response && response.success) return toast.success('Login realizado com sucesso');
+    if (response) return toast.error(response.message);
+  };
+
   return (
     <main className='w-full flex h-full'>
       <div className='w-3/5 flex flex-col h-full bg-[#F5F5F5]'>
@@ -29,8 +40,31 @@ export default function IndexPage() {
         <div className='h-1/3 p-10 w-full flex flex-col'>
           <h1 className='text-3xl font-semibold text-gray-600 mb-10 px-5'>Login com a sua conta</h1>
           <div className='flex flex-col gap-2'>
-            <Input size='md' variant='flat' label='Email' radius='lg' />
-            <Input size='md' variant='flat' label='Senha' radius='lg' type='password' />
+            <Input
+              size='md'
+              variant='flat'
+              label='Email'
+              radius='lg'
+              value={loginEmail}
+              onValueChange={setLoginEmail}
+            />
+            <Input
+              size='md'
+              variant='flat'
+              label='Senha'
+              radius='lg'
+              type='password'
+              value={loginPassword}
+              onValueChange={setLoginPassword}
+            />
+            <Button
+              className='p-6 bg-[#33bcff] w-[150px] text-white text-lg font-semibold self-end mt-5'
+              size='md'
+              radius='full'
+              onPress={handleLogin}
+            >
+              Entrar
+            </Button>
           </div>
         </div>
         <div className='h-1/3'></div>
