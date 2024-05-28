@@ -34,6 +34,17 @@ services:
     networks:
       - crud
 
+  ui:
+    depends_on:
+      - api
+    container_name: react_ui
+    build:
+      context: ./fullstack-app.ui
+    ports:
+      - 3000:80
+    networks:
+      - crud
+
 networks:
   crud:
     driver: bridge
