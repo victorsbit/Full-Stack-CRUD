@@ -1,4 +1,4 @@
-USE crud_db;
+export const seedString = `USE crud_db;
 
 CREATE TABLE User (
     ID int NOT NULL AUTO_INCREMENT,
@@ -7,4 +7,4 @@ CREATE TABLE User (
     Email varchar(255) NOT NULL,
     Password varchar(255) NOT NULL,
     PRIMARY KEY (ID)
-);
+);`;

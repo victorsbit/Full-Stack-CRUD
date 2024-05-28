@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/modal';
 import { signIn, signUp } from '@/services/modules/authService';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,9 @@ export default function IndexPage() {
 
   const router = useNavigate();
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const response = await signUp({ firstName, lastName, email, password });
 
     if (response) {
@@ -34,7 +36,9 @@ export default function IndexPage() {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const response = await signIn({ email: loginEmail, password: loginPassword });
 
     if (response && response.success) {
@@ -55,31 +59,33 @@ export default function IndexPage() {
         <div className='h-2/3 md:h-1/3 p-10 w-full flex flex-col'>
           <h1 className='text-3xl font-semibold text-gray-600 mb-10 px-5'>Login com a sua conta</h1>
           <div className='flex flex-col gap-2'>
-            <Input
-              size='md'
-              variant='flat'
-              label='Email'
-              radius='lg'
-              value={loginEmail}
-              onValueChange={setLoginEmail}
-            />
-            <Input
-              size='md'
-              variant='flat'
-              label='Senha'
-              radius='lg'
-              type='password'
-              value={loginPassword}
-              onValueChange={setLoginPassword}
-            />
-            <Button
-              className='p-6 bg-[#33bcff] w-[150px] text-white text-lg font-semibold self-center mt-5'
-              size='md'
-              radius='full'
-              onPress={handleLogin}
-            >
-              Entrar
-            </Button>
+            <form onSubmit={handleLogin}>
+              <Input
+                size='md'
+                variant='flat'
+                label='Email'
+                radius='lg'
+                value={loginEmail}
+                onValueChange={setLoginEmail}
+              />
+              <Input
+                size='md'
+                variant='flat'
+                label='Senha'
+                radius='lg'
+                type='password'
+                value={loginPassword}
+                onValueChange={setLoginPassword}
+              />
+              <Button
+                className='p-6 bg-[#33bcff] w-[150px] text-white text-lg font-semibold self-center mt-5'
+                size='md'
+                radius='full'
+                type='submit'
+              >
+                Entrar
+              </Button>
+            </form>
           </div>
         </div>
         <div className='h-1/3'></div>
@@ -93,7 +99,7 @@ export default function IndexPage() {
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
               <ModalContent>
                 {(onClose) => (
-                  <>
+                  <form onSubmit={handleSignUp}>
                     <ModalHeader className='flex flex-col gap-1 text-gray-700 text-xl'>Cadastre-se</ModalHeader>
                     <ModalBody>
                       <div className='h-1/3 p-3 w-full flex flex-col'>
@@ -140,11 +146,11 @@ export default function IndexPage() {
                       <Button color='danger' variant='light' onPress={onClose}>
                         Cancelar
                       </Button>
-                      <Button color='primary' onPress={handleSignUp}>
+                      <Button color='primary' type='submit'>
                         Cadastrar-se
                       </Button>
                     </ModalFooter>
-                  </>
+                  </form>
                 )}
               </ModalContent>
             </Modal>
