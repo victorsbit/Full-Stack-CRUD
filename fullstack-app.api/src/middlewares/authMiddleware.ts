@@ -13,11 +13,11 @@ export function checkToken(req: Request, res: Response, next: NextFunction) {
     const userFromToken = typeof payload !== 'string' && payload.user;
 
     if (!userFromToken) {
-      return res.send(401).json({ success: false, message: 'Token inválido' });
+      return res.send(401).json({ success: false, message: 'Token inválido ou expirado' });
     }
 
     return next();
   } catch (error) {
-    return res.status(401).json({ success: false, message: 'Token inválido' });
+    return res.status(401).json({ success: false, message: 'Token inválido ou expirado' });
   }
 }
